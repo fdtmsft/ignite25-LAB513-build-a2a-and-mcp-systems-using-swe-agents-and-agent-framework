@@ -2,15 +2,17 @@
 
 ## Lab Scenario
 
-In this lab, you'll build a sophisticated multi-agent event planning system using **[Microsoft Agent Framework](https://github.com/microsoft/agent-framework)**, an enterprise-ready framework that combines the best of Semantic Kernel and AutoGen. The framework's key differentiator is its **workflow orchestration capabilities**, which enable you to define complex multi-agent interactions as declarative workflows with clear execution paths, state management, and observability.
+In this lab, you'll build a multi-agent event planning system using **[Microsoft Agent Framework](https://github.com/microsoft/agent-framework)**, an enterprise-ready framework that combines the best of Semantic Kernel and AutoGen. The framework's key differentiator is its **workflow orchestration capabilities**, which enable you to define complex multi-agent interactions as declarative workflows with clear execution paths, state management, and observability.
 
 You'll create specialized AI agents that collaborate to plan comprehensive events, learning how to:
 
-- **Build Multi-Agent Workflows**: Orchestrate multiple specialized agents (Event Coordinator, Venue Specialist, Budget Analyst, Catering Coordinator, and Logistics Manager) working together using Agent-to-Agent (A2A) protocol for direct communication and Model Context Protocol (MCP) for external tool integration
-- **Deploy to Azure AI Foundry**: Run your agents in Azure AI Agents Service with full enterprise-grade capabilities and monitoring
-- **Visualize with DevUI**: See real-time agent interactions, workflow execution graphs, and message flows in an interactive interface
+- **Build Multi-Agent Workflows**: Orchestrate multiple specialized agents (Event Coordinator, Venue Specialist, Budget Analyst, Catering Coordinator, and Logistics Manager) that work together through workflow edges and message passing. The framework supports **Agent-to-Agent (A2A) protocol** for direct inter-agent communication and **Model Context Protocol (MCP)** for integrating external tools like weather forecasting and calendar management.
 
-The system demonstrates concurrent workflow execution patterns where agents work in parallel, exchange information through A2A communication, leverage MCP tools for capabilities like weather forecasting and calendar management, and synthesize comprehensive event plans. You'll implement human-in-the-loop capabilities, allowing user input at critical decision points during agent execution.
+- **Deploy to Azure AI Foundry**: Run your agent-framework workflows in Azure AI Foundry, where agents are automatically registered and managed with full enterprise-grade capabilities, security, and observability.
+
+- **Visualize with DevUI and Azure AI Foundry**: Monitor real-time agent interactions, workflow execution graphs, and message flows through interactive interfaces both locally (DevUI) and in the cloud (Azure AI Foundry).
+
+The system demonstrates concurrent workflow execution patterns where agents work in sequence and in parallel, exchange information through the workflow, invoke MCP tools for specialized capabilities, and synthesize comprehensive event plans. You'll also implement **human-in-the-loop** capabilities, allowing user input and approval at critical decision points during agent execution.
 
 ![Event Planning Workflow Architecture](https://raw.githubusercontent.com/microsoft/spec-to-agents/main/assets/workflow_architecture.png)
 
@@ -18,17 +20,7 @@ The system demonstrates concurrent workflow execution patterns where agents work
 
 ## Understanding Key Protocols: A2A and MCP
 
-Before diving into the lab, let's understand two fundamental protocols that enable communication and collaboration in modern multi-agent systems and workflows:
-
-### **Agent-to-Agent (A2A) Protocol**
-
-A2A is an emerging standard for enabling direct communication between AI agents. In traditional systems, agents communicate through a central orchestrator. With A2A:
-
-- **Direct Communication**: Agents can message each other directly, reducing latency and enabling more natural collaboration
-- **Standardized Messaging**: A common protocol ensures agents built with different frameworks can still communicate
-- **Workflow Flexibility**: Agents can dynamically determine which other agents to involve based on the task
-
-**In this lab**, your agents use A2A patterns to pass context between specialists (e.g., Budget Analyst receives venue recommendations from Venue Specialist).
+Before diving into the lab, let's understand two fundamental protocols that enable communication and collaboration in modern multi-agent systems:
 
 ### **Model Context Protocol (MCP)**
 
@@ -43,57 +35,95 @@ MCP is an open standard that defines how AI models access external tools and dat
 - **Weather forecasting**: External API integration via MCP
 - **Calendar management**: Persistent scheduling capabilities
 
-MCP enables your locally-defined Python functions to become discoverable, callable tools for any MCP-compatible AI system.
+### **Agent-to-Agent (A2A) Protocol**
+
+A2A is an emerging standard for enabling direct communication between AI agents. With A2A:
+
+- **Direct Communication**: Agents can message each other directly, reducing latency and enabling more natural collaboration
+- **Standardized Messaging**: A common protocol ensures agents built with different frameworks can communicate
+- **Framework Compatibility**: Microsoft Agent Framework supports A2A for inter-agent communication patterns
+
+Your workflow in this lab uses message passing between agents through workflow edges. Agent Framework also supports A2A protocol for scenarios requiring direct agent-to-agent communication beyond workflow orchestration.
 
 ---
 
-## 1  Lab Set-Up Snapshot
+
+===
+
+
+## 1.  Lab Set-Up & Sign-In to Skillable Events GitHub
+
+Sign in to your lab environment using:
+- Username: +++@lab.VirtualMachine(Win11-Pro-Base).Username+++
+- Password: +++@lab.VirtualMachine(Win11-Pro-Base).Password+++
 
 Your lab environment comes pre-configured with:
 
 - **Visual Studio Code** - Primary development environment
-- **Edge - GitHub & Azure Portals** - Pre-configured browser tabs
 - **Python 3.13** - Latest stable version
 - **uv** - Fast Python package manager
 - **Azure CLI** - Manage Azure resources
 - **Azure Developer CLI (azd)** - Simplified deployment workflows
+- **AI Toolkit extension for VSCode** - Simplifies Gen AI App Development
 - **Git** - Source control
 
 > [!hint] **Ignore Sign-In Notifications**
 > 
 > You may see blue "Sign in required" notifications or "Activate Windows" watermarks. Simply click "Not now" and continue - these won't affect your lab experience.
 
-From your Desktop (or Taskbar), open the **Edge - GitHub & Azure Portals** shortcut with three tabs:
-1. **spec-to-agents GitHub Repo**: *https://github.com/microsoft/spec-to-agents*
-2. **Azure AI Foundry**: *https://ai.azure.com*
-3. **Azure Portal**: *https://portal.azure.com*
+**Configure GitHub Copilot using *Skillable Events* GitHub Enterprise:**
+1. From your Desktop (or Taskbar), open the **Edge** shortcut, and navigate to: +++**https://github.com/skillable-events**+++
+1. Single sign-on to Skillable events, by clicking **Continue** on this page.
 
+   !IMAGE[0-skillable-signin.png](instructions310255/0-skillable-signin.png)
+
+1. Sign in with your Azure Cloud Credentials:
+   - Username: 
+   +++@lab.CloudPortalCredential(User1).Username+++
+   
+   - Temporary Access Pass: 
+     +++@lab.CloudPortalCredential(User1).AccessToken+++
+
+1. Click on Yes to Stay Signed-in, when prompted
 
 ---
 
-## 2  Sign In to GitHub Copilot
+## 2.  Sign In to GitHub Copilot
 
-Before cloning the repository, you'll need to sign in to GitHub Copilot with your GitHub Enterprise account.
+Before cloning the repository, you'll need to sign in to GitHub Copilot with the lab-provided GitHub Enterprise account.
+
+> [!important] **Complete Step 1 First**
+> 
+> Ensure you've signed in to Skillable Events GitHub from Step 1 before proceeding.
 
 1. Launch **Visual Studio Code** from the Taskbar.
 
-2. In the bottom-right corner of VS Code, click the **GitHub Copilot** status icon.
+2. In the bottom-right corner of VS Code, click the **GitHub Copilot** status icon, then click **Continue with GitHub**.
+
+   !IMAGE[1-vsc-ghcp-signin.png](instructions310255/1-vsc-ghcp-signin.png)
+   
+   !IMAGE[1b-vsc-continue-w-github.png](instructions310255/1b-vsc-continue-w-github.png)
 
 3. A browser window will open asking you to authorize Visual Studio Code. Click **Continue** to proceed.
 
 4. On the authorization page, click **Authorize Visual-Studio-Code** to grant access.
 
-5. After authorization, the browser will redirect. You can close the browser tab and return to VS Code.
+   !IMAGE[2-authorize-vsc.png](instructions310255/2-authorize-vsc.png)
+
+5. After authorization, the browser will redirect. Close the browser tab and return to VS Code.
 
 6. Verify that the GitHub Copilot icon in the bottom-right now shows you're signed in.
 
 > [!note] **GitHub Enterprise Account**
 > 
-> This lab uses a GitHub Enterprise account from the **skillable-events** organization, which provides access to GitHub Copilot features needed for this lab.
+> This lab uses a GitHub Enterprise account from the **skillable-events** organization, which provides access to GitHub Copilot features needed for this lab to work with specs.
 
 ---
 
-## 3  Clone and Set Up the Repository
+===
+
+
+## 3.  Clone and Set Up the Repository
 
 1. In VS Code, open a new **Terminal** (*Terminal → New Terminal*).
 
@@ -106,22 +136,26 @@ Before cloning the repository, you'll need to sign in to GitHub Copilot with you
 
    # Open in VS Code
    code . --reuse-window
+
    ```
 
 3. VS Code will reload with the **spec-to-agents** folder open.
+4. When prompted with the workspace trust dialog, click **Yes, I trust the authors** to enable all features.
 
 ---
 
-## 4  Start Azure Resource Provisioning (Background Process)
+## 4.  Start Azure Resource Provisioning (Background Process)
 
 You'll use Azure Developer CLI (azd) to provision all necessary Azure resources. This process takes 5-10 minutes and runs in the background while you work on coding exercises.
 
-1. **Login to azd** (ensure you're in the *spec-to-agents* root directory):
+1. In the Terminal, **log in to azd** (ensure you're in the *spec-to-agents* root directory):
    
    **+++azd auth login+++**
 
+   and select the existing signed-in account (from Step 1), or authenticate with
+   
    - Username: **+++@lab.CloudPortalCredential(User1).Username+++**  
-   - Password: **+++@lab.CloudPortalCredential(User1).Password+++**
+   - Temporary Access Pass: **+++@lab.CloudPortalCredential(User1).AccessToken+++**
    
    Authenticate in your browser, then close the tab and return to VS Code.
 
