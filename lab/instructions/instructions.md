@@ -134,6 +134,8 @@ Before cloning the repository, you'll need to sign in to GitHub Copilot with the
    git clone https://github.com/microsoft/spec-to-agents.git
    cd spec-to-agents
 
+   # TODO: Checkout Ignite lab branch
+
    # Open in VS Code
    code . --reuse-window
 
@@ -144,20 +146,31 @@ Before cloning the repository, you'll need to sign in to GitHub Copilot with the
 
 ---
 
-## 4.  Start Azure Resource Provisioning (Background Process)
+## 4  Start Azure Resource Provisioning (Background Process)
 
 You'll use Azure Developer CLI (azd) to provision all necessary Azure resources. This process takes 5-10 minutes and runs in the background while you work on coding exercises.
 
-1. In the Terminal, **log in to azd** (ensure you're in the *spec-to-agents* root directory):
+1. **Authenticate with Azure CLIs** (ensure you're in the *spec-to-agents* root directory):
+
+   First, authenticate with **azd**:
    
    **+++azd auth login+++**
-
-   and select the existing signed-in account (from Step 1), or authenticate with
    
+   Select the existing signed-in account (from Step 1), or authenticate with:
    - Username: **+++@lab.CloudPortalCredential(User1).Username+++**  
    - Temporary Access Pass: **+++@lab.CloudPortalCredential(User1).AccessToken+++**
    
    Authenticate in your browser, then close the tab and return to VS Code.
+
+   Next, authenticate with **Azure CLI**:
+   
+   **+++az login --use-device-code+++**
+   
+   Follow the device code instructions: copy the device code, click the link, select the existing account, and click **Continue** when prompted:
+   
+   !IMAGE[3-az-cli-continue.png](instructions310255/3-az-cli-continue.png)
+
+   Return to VSCode and click enter to select the default subscription
 
 2. **Create azd Environment**:
 
@@ -169,14 +182,24 @@ You'll use Azure Developer CLI (azd) to provision all necessary Azure resources.
 
 > [!knowledge] **Resources Being Provisioned**
 > 
-> This creates:
-> - Azure AI Foundry Hub and Project
-> - Azure OpenAI Service (gpt-4o, text-embedding-3-small)
-> - Azure Cosmos DB for NoSQL (agent state storage)
-> - Azure Storage Account
-> - Azure AI Search
-> - Azure Application Insights
-> - Azure Container Apps (for DevUI hosting)
+> This creates the following Azure resources:
+> 
+> **AI Platform:**
+> - **Azure AI Foundry Project** - Project workspace for your event planning agents
+> - **Model Deployments** - Two Azure OpenAI models deployed:
+>   - *gpt-5-mini* (primary agent tasks)
+>   - *gpt-4.1-mini* (web search capabilities)
+> - **Bing Grounding Connection** - Real-time web search for agents
+> 
+> **Application Infrastructure:**
+> - **Azure Container Apps Environment** - Managed serverless container hosting
+> - **Azure Container App** - Hosts your multi-agent application with DevUI
+> - **Azure Container Registry** - Stores and manages container images
+> 
+> **Monitoring & Security:**
+> - **Application Insights** - Application monitoring and telemetry
+> - **Log Analytics Workspace** - Centralized logging and analytics
+> - **Managed Identity** - Secure authentication between services
 
 **Proceed to coding exercises while provisioning runs in the background.**
 
