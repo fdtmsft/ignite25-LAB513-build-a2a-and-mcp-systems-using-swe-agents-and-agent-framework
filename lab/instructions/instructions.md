@@ -1,27 +1,45 @@
-> [!alert] ## Lab Environment Setup
-> 
-> **🚨 IMPORTANT - READ THIS FIRST! 🚨**
->
-> **DO NOT use the Surface laptop on your desk!** You will work **ONLY** in the **Skillable Lab Cloud VM** (the virtual machine in your browser).
->
-> ### Before You Begin:
-> 1. **Fullscreen Your Lab Environment**: Click the fullscreen button in the top-left toolbar to maximize your workspace:
->    
->    !IMAGE[fullscreen.png](instructions310255/fullscreen.png)
->    
->    Look for the **four-arrow icon** (⛶) in the toolbar and click it to enter fullscreen mode.
->
-> 2. **DO NOT Close the Lab Cloud VM**: Keep your browser tab with the Skillable Lab VM open for the entire duration of the lab. Closing it will terminate your lab session.
->
-> 3. **Work Inside the VM**: All your work will be done inside the virtual machine environment. The Surface laptop is **not** part of this lab.
->
-> ✅ **You're ready to proceed once you've:**
-> - Entered fullscreen mode in the Skillable Lab Cloud VM
-> - Confirmed you're working in the browser-based VM (not the physical Surface laptop)
-
-===
-
 # Build A2A and MCP Systems using SWE Agents and agent-framework
+
+## Prerequisites and Setup
+
+Before starting this lab, you'll need to configure the following environment variables or replace them throughout the instructions with your actual values:
+
+### Required Azure Resources
+- `${SUBSCRIPTION_ID}` - Your Azure subscription ID
+- `${RESOURCE_GROUP_LOCATION}` - Azure region for your resources (e.g., `eastus`, `westus2`)
+
+### Lab Identification
+- `${LAB_INSTANCE_ID}` - A unique identifier for your lab instance (can be any unique string)
+
+### Azure Authentication
+- `${USERNAME}` - Your Azure portal username/email
+- `${PASSWORD}` - Your Azure portal password
+- `${ACCESS_TOKEN}` - Your temporary access pass or authentication token (if using)
+
+### Virtual Machine Credentials (if applicable)
+- `${VM_USERNAME}` - Virtual machine username
+- `${VM_PASSWORD}` - Virtual machine password
+
+### How to Use These Variables
+
+**Option 1: Set as environment variables** (Linux/macOS)
+```bash
+export SUBSCRIPTION_ID="your-subscription-id-here"
+export LAB_INSTANCE_ID="unique-lab-id"
+export RESOURCE_GROUP_LOCATION="eastus"
+```
+
+**Option 2: Set as environment variables** (Windows PowerShell)
+```powershell
+$env:SUBSCRIPTION_ID="your-subscription-id-here"
+$env:LAB_INSTANCE_ID="unique-lab-id"
+$env:RESOURCE_GROUP_LOCATION="eastus"
+```
+
+**Option 3: Manual replacement**
+Throughout these instructions, replace each `${VARIABLE_NAME}` with your actual value when you see it in commands.
+
+---
 
 ## Lab Scenario
 
@@ -37,7 +55,7 @@ You'll create specialized AI agents that collaborate to plan comprehensive event
 
 The system demonstrates concurrent workflow execution patterns where agents work in sequence and in parallel, exchange information through the workflow, invoke MCP tools for specialized capabilities, and synthesize comprehensive event plans. You'll also implement **human-in-the-loop** capabilities, allowing user input and approval at critical decision points during agent execution.
 
-!IMAGE[Event Planning Agent Design.png](instructions310255/Event Planning Agent Design.png){700}
+![Event Planning Agent Design.png](images/Event Planning Agent Design.png)
 
 ---
 
@@ -77,8 +95,8 @@ Your workflow in this lab uses message passing between agents through workflow e
 ## 1. Lab Environment Setup
 
 Sign in to your lab environment using:
-- Username: +++@lab.VirtualMachine(Win11-Pro-Base).Username+++
-- Password: +++@lab.VirtualMachine(Win11-Pro-Base).Password+++
+- Username: ${VM_USERNAME}
+- Password: ${VM_PASSWORD}
 
 Your lab environment comes pre-configured with:
 
@@ -91,13 +109,14 @@ Your lab environment comes pre-configured with:
 - **Microsoft Foundry extension for VSCode** - Unified platform for Enterprise AI operations, Model builders, and App development
 - **Git** - Source control
 
-> [!hint] **Ignore Sign-In Notifications**
+> [!TIP]
+> **Ignore Sign-In Notifications**
 > 
 > You may see blue "Sign in required" notifications or "Activate Windows" watermarks. Simply click "Not now" and continue - these won't affect your lab experience.
 
 ---
 
-===
+---
 
 
 ## 2. Clone and Set Up the Repository
@@ -136,17 +155,19 @@ code . --reuse-window
 uv sync
 ```
 
-> [!hint] **Save Time: Start Azure Authentication in Parallel**
+> [!TIP]
+> **Save Time: Start Azure Authentication in Parallel**
 > 
 > While `uv sync` is running, open a **new terminal** (*Terminal → New Terminal* or click the **+** icon) and proceed to Section 3 to authenticate with Azure. This lets both processes run simultaneously!
 
 ---
-===
+---
 ## 3. Start Azure Resource Provisioning (Background Process)
 
 You'll use Azure Developer CLI (azd) to provision all necessary Azure resources. This process takes 5-10 minutes and runs in the background while you work on coding exercises.
 
-> [!note] **Parallel Execution**
+> [!NOTE]
+> **Parallel Execution**
 > 
 > If `uv sync` is still running from Section 2, that's fine! Open a new terminal for these commands so both can run in parallel.
 
@@ -156,31 +177,32 @@ You'll use Azure Developer CLI (azd) to provision all necessary Azure resources.
    
    First, authenticate with **azd**:
    
-   **+++azd auth login+++**
+   `azd auth login`
    
    Select the existing signed-in account (from Step 1), or authenticate with:
-   - Username: **+++@lab.CloudPortalCredential(User1).Username+++**  
-   - Temporary Access Pass: **+++@lab.CloudPortalCredential(User1).AccessToken+++**
+   - Username: **${USERNAME}**  
+   - Temporary Access Pass: **${ACCESS_TOKEN}**
 
-> [+help] If Temp pass didn't work, try   
+> [!NOTE]
+> **Help:** If Temp pass didn't work, try   
 > 
-> **+++@lab.CloudPortalCredential(User1).Password+++**
+> **${PASSWORD}**
    
    Authenticate in your browser, then close the tab and return to VS Code.
    
    Next, authenticate with **Azure CLI**:
    
-   **+++az login --use-device-code+++**
+   `az login --use-device-code`
    
    Following the instructions to copy your device code and Sign in:
 
-   !IMAGE[device-code-az-login.png](instructions310255/device-code-az-login.png){300}
+   ![device-code-az-login.png](images/device-code-az-login.png)
    
    Select existing account, or enter:
-   - Username: **+++@lab.CloudPortalCredential(User1).Username+++**  
-   - Temporary Access Pass: **+++@lab.CloudPortalCredential(User1).AccessToken+++**
+   - Username: **${USERNAME}**  
+   - Temporary Access Pass: **${ACCESS_TOKEN}**
    
-   !IMAGE[device-login-continue.png](instructions310255/device-login-continue.png){300}
+   ![device-login-continue.png](images/device-login-continue.png)
    
    Return to VS Code terminal and press **Enter** to select the default subscription.
 
@@ -188,13 +210,14 @@ You'll use Azure Developer CLI (azd) to provision all necessary Azure resources.
 
 3. **Create azd Environment**:
    
-   **+++azd env new agents-lab-@lab.LabInstance.Id --subscription @lab.CloudSubscription.Id --location @lab.CloudResourceGroup(ResourceGroup1).Location+++**
+   `azd env new agents-lab-${LAB_INSTANCE_ID} --subscription ${SUBSCRIPTION_ID} --location ${RESOURCE_GROUP_LOCATION}`
 
 4. **Start Provisioning** (do not wait for completion):
    
-   **+++azd provision+++**
+   `azd provision`
 
-> [!knowledge] **Resources Being Provisioned**
+> [!NOTE]
+> **Knowledge: Resources Being Provisioned**
 > 
 > This creates the following Azure resources:
 > 
@@ -219,7 +242,7 @@ You'll use Azure Developer CLI (azd) to provision all necessary Azure resources.
 
 ---
 
-===
+---
 
 ## 4. Understanding the Codebase Structure
 
@@ -258,7 +281,8 @@ src/spec_to_agents/
 └── console.py                 # 💻 CLI entry point for testing
 ```
 
-> [!knowledge] **Agent Framework Code Organization**
+> [!NOTE]
+> **Knowledge: Agent Framework Code Organization**
 > 
 > Agent Framework follows a clear separation of concerns:
 > - **`/agents/`**: Agent creation functions that combine prompts + tools
@@ -272,7 +296,7 @@ src/spec_to_agents/
 
 ---
 
-===
+---
 
 ## 5. Exercise 1: Create Your First Agent
 
@@ -281,7 +305,8 @@ src/spec_to_agents/
 2. **Tools** (capabilities like web search or code execution)
 3. **Response format** (structured output for predictable responses)
 
-> [!important] **Testing Comes Later**
+> [!IMPORTANT]
+> **Testing Comes Later**
 > 
 > You'll implement agent logic now, but won't run the workflow until **Exercise 11**. This allows `azd provision` (from Section 3) to complete in the background while you learn the framework through hands-on coding.
 
@@ -296,7 +321,8 @@ src/spec_to_agents/
 4. **Uncomment and complete the agent creation code** by replacing the TODO section with:
 
 
-> [!hint] Use **Copy** instead of Type for longer snippets
+> [!TIP]
+> Use **Copy** instead of Type for longer snippets
 
 ```python
 # Exercise 1 - Create Venue Specialist agent with web search capability
@@ -318,11 +344,13 @@ src/spec_to_agents/
     )
 ```
 
-> [!note] **Don't worry about `web_search` yet!**
+> [!NOTE]
+> **Don't worry about `web_search` yet!**
 > 
 > You'll implement this tool in Exercise 2. For now, just understand that it gives the agent web search capabilities.
 
-> [!knowledge] **What You Just Learned**
+> [!NOTE]
+> **Knowledge: What You Just Learned**
 > 
 > **Agent Creation Pattern**:
 > - `@inject` decorator: Enables automatic dependency injection - the framework provides `client`, `global_tools`, and `model_config` automatically
@@ -356,15 +384,16 @@ src/spec_to_agents/
 
 ---
 
-===
+---
 
 ## 6. Exercise 2: Implement a Web Search Tool
 
 **Concept**: Tools in agent-framework are Python functions decorated with `@ai_function`. The LLM discovers and invokes these tools automatically when needed.
 
-!IMAGE[Agent Tools.png](instructions310255/Agent Tools.png)
+![Agent Tools.png](images/Agent Tools.png)
 
-> [!important] **Testing Still Comes Later**
+> [!IMPORTANT]
+> **Testing Still Comes Later**
 > 
 > Continue building components - you'll test everything together in Exercise 11 after `azd provision` completes.
 
@@ -460,7 +489,7 @@ src/spec_to_agents/
 > 
 > This layered approach separates concerns: your agent handles reasoning, the tool handles execution, and the temporary agent handles Bing API interaction.
 
-===
+---
 
 ## 7. Exercise 3: Add MCP Sequential Thinking Tool
 
@@ -556,7 +585,7 @@ src/spec_to_agents/
 
 ---
 
-===
+---
 
 ## 8. Exercise 4: Define Structured Output Format
 
@@ -584,7 +613,8 @@ src/spec_to_agents/
     user_prompt: str | None = Field(default=None, description="Question to ask user if user_input_needed=True")
 ```
 
-> [!knowledge] **What You Just Learned**
+> [!NOTE]
+> **Knowledge: What You Just Learned**
 > 
 > **Structured Outputs with Pydantic**:
 > - `BaseModel`: Pydantic base class providing type validation, serialization, and schema generation
@@ -713,7 +743,7 @@ src/spec_to_agents/
 
 ---
 
-===
+---
 
 ## 9. Exercise 5: Build the Workflow with Edges
 
@@ -776,7 +806,8 @@ src/spec_to_agents/
     return workflow
 ```
 
-> [!knowledge] **What You Just Learned**
+> [!NOTE]
+> **Knowledge: What You Just Learned**
 > 
 > **Workflow Builder Pattern**:
 > - **`WorkflowBuilder`**: Fluent API for constructing workflows with method chaining
@@ -881,7 +912,7 @@ src/spec_to_agents/
 > - Enables workflow versioning and tracking in production
 
 ---
-===
+---
 
 
 ## 10. Verify Environment Setup
@@ -897,7 +928,8 @@ The `azd provision` command (from Section 3) automatically configured everything
    SUCCESS: Your application was provisioned in Azure ...
    ```
 
-   > [!note] **Still Running?**
+   > [!NOTE]
+   > **Still Running?**
    > 
    > Wait for `azd provision` to complete before proceeding (typically 5-10 minutes).
 
@@ -909,21 +941,23 @@ Test-Path .env
 
    Should output: `True`
 
-> [!knowledge] **What Happened**
+> [!NOTE]
+> **Knowledge: What Happened**
 > 
 > The post-provisioning hook automatically:
 > - Generated `.env` with Azure configuration
 > - Installed dependencies via `uv sync`
 > - Created `.venv` virtual environment
 
-> [!note] **If `.env` is missing**, run:
+> [!NOTE]
+> **If `.env` is missing**, run:
 > ```powershell
 > .\scripts\generate-env.ps1
 > ```
 
 ---
 
-===
+---
 
 ## 11. Run Your First Multi-Agent Workflow
 
@@ -1001,7 +1035,8 @@ uv run console
    ✓ Event planning complete!
    ```
 
-> [!knowledge] **What Just Happened?**
+> [!NOTE]
+> **Knowledge: What Just Happened?**
 > 
 > **Dynamic Workflow**:
 > - **Venue** searched web → recommended LongHouse
@@ -1018,7 +1053,7 @@ uv run console
 > - **Service-managed threads**: Each agent remembered full conversation context
 
 ---
-===
+---
 
 ## 12. Visualize with DevUI
 
@@ -1035,8 +1070,8 @@ uv run app
    - Enter your prompt: `Plan a corporate holiday party for 50 people, budget $5000`
    - Click **"Run Workflow"** and respond to any user inputs (elicitations)
 
-   !IMAGE[devui-run-workflow.png](instructions310255/devui-run-workflow.png){700}
-   !IMAGE[devui-1-user-elicitation.png](instructions310255/devui-1-user-elicitation.png){700}
+   ![devui-run-workflow.png](images/devui-run-workflow.png)
+   ![devui-1-user-elicitation.png](images/devui-1-user-elicitation.png)
 
 3. **Watch Execution**:
    - **Graph**: Nodes light up green as agents execute
@@ -1044,8 +1079,8 @@ uv run app
    - **Traces Tab**: Execution duration and routing decisions
    - **Tools Tab**: Tool calls (like `web_search`) with arguments and results
 
-   !IMAGE[devui-3-finish-run.png](instructions310255/devui-3-finish-run.png){700}
-   !IMAGE[tool-calls-devui.png](instructions310255/tool-calls-devui.png){300}
+   ![devui-3-finish-run.png](images/devui-3-finish-run.png)
+   ![tool-calls-devui.png](images/tool-calls-devui.png)
 
 4. **Run the Agents** (Optional)
    - Select **"VenueSpecialist"** from the top dropdown
@@ -1055,9 +1090,10 @@ uv run app
    - Click the **Tools** tab on the right hand side of the screen
    - Inspect the call to the **web_search** tool
 
-   !IMAGE[devui-agent.png](instructions310255/devui-agent.png){600}
+   ![devui-agent.png](images/devui-agent.png)
 
-> [!knowledge] **DevUI vs Console**
+> [!NOTE]
+> **Knowledge: DevUI vs Console**
 > 
 > - **Visual workflow graph**: See agent communication patterns
 > - **Detailed traces**: Debug with execution timings and message routing
@@ -1066,7 +1102,7 @@ uv run app
 
 ---
 
-===
+---
 
 ## 13. Deploy to Azure
 
@@ -1096,7 +1132,7 @@ Now let's deploy your workflow to Azure!
 
 ---
 
-===
+---
 
 ## 14. Explore Observability in Microsoft Foundry
 
@@ -1104,19 +1140,20 @@ See how Microsoft Foundry provides enterprise observability for your multi-agent
 
 ### Access Microsoft Foundry
 
-1. **Navigate to** +++**https://ai.azure.com**+++ and click **Sign in**
+1. **Navigate to** **https://ai.azure.com** and click **Sign in**
 
 2. **Authenticate** with your credentials (or use existing signed-in account):
-   - Username: +++**@lab.CloudPortalCredential(User1).Username**+++
-   - Temporary Access Pass: +++**@lab.CloudPortalCredential(User1).AccessToken**+++
+   - Username: **${USERNAME}**
+   - Temporary Access Pass: **${ACCESS_TOKEN}**
    
-> [+help] If Temp pass didn't work, try   
+> [!NOTE]
+> **Help:** If Temp pass didn't work, try   
 > 
-> **+++@lab.CloudPortalCredential(User1).Password+++**
+> **${PASSWORD}**
 
 3. **Select your project** (there will be only one):
 
-   !IMAGE[aif-select-project.png](instructions310255/aif-select-project.png){300}
+   ![aif-select-project.png](images/aif-select-project.png)
 
 ---
 
@@ -1126,20 +1163,21 @@ See how Microsoft Foundry provides enterprise observability for your multi-agent
 
 2. **Click "Connect"** to connect to Application Insights (only one option available)
 
-!IMAGE[connect-appinsights.png](instructions310255/connect-appinsights.png)
+![connect-appinsights.png](images/connect-appinsights.png)
 
 3. **View workflow runs** - each **workflow.run** entry shows a complete event planning execution:
 
-   !IMAGE[tracing-workflow-run.png](instructions310255/tracing-workflow-run.png){300}
+   ![tracing-workflow-run.png](images/tracing-workflow-run.png)
 
 4. **Click any workflow.run** to see the distributed trace:
    - Hierarchical view of all agents (venue, budget, catering, logistics)
    - Tool calls (web_search, sequentialthinking)
    - Expand nodes to see timing, token usage, and input/output data
 
-   !IMAGE[tracing-explore.png](instructions310255/tracing-explore.png){500}
+   ![tracing-explore.png](images/tracing-explore.png)
 
-> [!knowledge] **Distributed Tracing Benefits**
+> [!NOTE]
+> **Knowledge: Distributed Tracing Benefits**
 > 
 > - Track requests across all agents and tools
 > - Identify performance bottlenecks
@@ -1157,7 +1195,7 @@ See how Microsoft Foundry provides enterprise observability for your multi-agent
    - Configured tools (web_search, sequentialthinking)
    - Model deployment (gpt-5-mini)
 
-   !IMAGE[agents-event-coordinator.png](instructions310255/agents-event-coordinator.png){300}
+   ![agents-event-coordinator.png](images/agents-event-coordinator.png)
 
 3. **Explore Threads** to see conversation history from your console runs
 
@@ -1167,7 +1205,7 @@ See how Microsoft Foundry provides enterprise observability for your multi-agent
 
 1. **Click the Microsoft Foundry icon** in VS Code's left sidebar (bottom icon):
 
-   !IMAGE[aif-vsc-extension.png](instructions310255/aif-vsc-extension.png){200}
+   ![aif-vsc-extension.png](images/aif-vsc-extension.png)
 
 2. **Sign in to Azure** (if prompted) using the same credentials
 
@@ -1176,14 +1214,15 @@ See how Microsoft Foundry provides enterprise observability for your multi-agent
    - **Agents**: All agents with quick access
    - **Threads**: Recent conversation threads
 
-> [!knowledge] **Observability Layers**
+> [!NOTE]
+> **Knowledge: Observability Layers**
 > 
 > - **Tracing**: HOW the workflow executed (timing, routing, failures)
 > - **Agents**: WHAT each component does (instructions, tools)
 > - **Threads**: Conversation history and state
 
 ---
-===
+---
 ## 15. BONUS: A2A (Agent-to-Agent) Integration
 
 In this bonus exercise, you'll explore **Agent-to-Agent (A2A) communication** by integrating your event planning workflow with external A2A-compatible agents. A2A enables direct agent communication across different frameworks and deployments.
@@ -1223,7 +1262,8 @@ AZURE_AI_FOUNDRY_PROJECT_ENDPOINT=<Your Microsoft Foundry Project Endpoint From 
 AZURE_AI_AGENT_MODEL_DEPLOYMENT_NAME=gpt-5-mini
    ```
    
-   > [!hint] **Finding Your Endpoint**
+   > [!TIP]
+   > **Finding Your Endpoint**
    > 
    > The `AZURE_AI_FOUNDRY_PROJECT_ENDPOINT` value is in your spec-to-agents `.env` file. You can find it by opening the `.env` file in your original VS Code window (the spec-to-agents project).
 
@@ -1256,7 +1296,7 @@ uv run app
     - In DevUI, click the **Agents** dropdown at the top (currently shows "Workflows")
     - Select **"AI Foundry Calendar Agent"** from the list
     
-    !IMAGE[devui-calendar-agent.png](instructions310255/devui-calendar-agent.png){400}
+    ![devui-calendar-agent.png](images/devui-calendar-agent.png)
 
 11. **Interact with the A2A agent**:
     - In the chat input at the bottom, type: `Check my availability for Friday at 8 am`
@@ -1280,9 +1320,10 @@ uv run app
       - Conversation threads from your DevUI interactions
       - Tool calls and responses
     
-    !IMAGE[Foundry-agents-calendar.png](instructions310255/Foundry-agents-calendar.png){400}
+    ![Foundry-agents-calendar.png](images/Foundry-agents-calendar.png)
 
-> [!knowledge] **What Just Happened?**
+> [!NOTE]
+> **Knowledge: What Just Happened?**
 > 
 > You've just demonstrated cross-framework agent communication:
 > 
@@ -1292,7 +1333,8 @@ uv run app
 > 
 > **Key Insight:** The Azure AI Foundry Agent is an instance of Azure's native agent service, but your agent-framework agents can communicate with it seamlessly through the A2A protocol. This demonstrates true interoperability across different agent frameworks and deployment models.
 
-> [!knowledge] **A2A in Production**
+> [!NOTE]
+> **Knowledge: A2A in Production**
 > 
 > In production scenarios, A2A enables:
 > - **Specialized Agent Services**: Deploy domain-expert agents (like calendar management) as microservices
@@ -1329,19 +1371,20 @@ For this lab, we've **pre-populated** all specifications. You'll focus on the im
 
 Before using spec-kit with GitHub Copilot, you need to authenticate with the lab-provided GitHub Enterprise account.
 
-1. From your Desktop (or Taskbar), open the **Edge** shortcut, and navigate to: +++**https://github.com/skillable-events**+++
+1. From your Desktop (or Taskbar), open the **Edge** shortcut, and navigate to: **https://github.com/skillable-events**
 
 2. Single sign-on to Skillable events, by clicking **Continue** on this page.
 
-   !IMAGE[0-skillable-signin.png](instructions310255/0-skillable-signin.png)
+   ![0-skillable-signin.png](images/0-skillable-signin.png)
 
 3. Sign in with your Azure Cloud Credentials:
-   - Username: +++@lab.CloudPortalCredential(User1).Username+++
-   - Temporary Access Pass: +++@lab.CloudPortalCredential(User1).AccessToken+++
+   - Username: ${USERNAME}
+   - Temporary Access Pass: ${ACCESS_TOKEN}
 
-> [+help] If Temp pass didn't work, try   
+> [!NOTE]
+> **Help:** If Temp pass didn't work, try   
 > 
-> **+++@lab.CloudPortalCredential(User1).Password+++**
+> **${PASSWORD}**
 
 4. Click on **Yes** to Stay Signed-in, when prompted
 
@@ -1355,21 +1398,22 @@ Now connect VS Code to GitHub Copilot using your Skillable Events account:
 
 2. In the bottom-right corner of VS Code, click the **GitHub Copilot** status icon, then click **Continue with GitHub**.
 
-   !IMAGE[1-vsc-ghcp-signin.png](instructions310255/1-vsc-ghcp-signin.png)
+   ![1-vsc-ghcp-signin.png](images/1-vsc-ghcp-signin.png)
    
-   !IMAGE[1b-vsc-continue-w-github.png](instructions310255/1b-vsc-continue-w-github.png)
+   ![1b-vsc-continue-w-github.png](images/1b-vsc-continue-w-github.png)
 
 3. A browser window will open asking you to authorize Visual Studio Code. Click **Continue** to proceed.
 
 4. On the authorization page, click **Authorize Visual-Studio-Code** to grant access.
 
-   !IMAGE[2-authorize-vsc.png](instructions310255/2-authorize-vsc.png)
+   ![2-authorize-vsc.png](images/2-authorize-vsc.png)
 
 5. After authorization, the browser will redirect. Close the browser tab and return to VS Code.
 
 6. Verify that the GitHub Copilot icon in the bottom-right now shows you're signed in.
 
-> [!note] **GitHub Enterprise Account**
+> [!NOTE]
+> **GitHub Enterprise Account**
 > 
 > This lab uses a GitHub Enterprise account from the **skillable-events** organization, which provides access to GitHub Copilot features needed for spec-kit to work.
 
@@ -1395,7 +1439,8 @@ The `.specify/` directory contains all the specifications for the Entertainment 
    - Sequential implementation steps
    - What Copilot will execute
 
-> [!knowledge] **Key Insight**
+> [!NOTE]
+> **Knowledge: Key Insight**
 > 
 > Notice the separation of concerns:
 > - **Constitution**: Principles (never changes)
@@ -1427,7 +1472,7 @@ Now you'll trigger Copilot to implement all tasks:
    ```
 /speckit.implement implement Tasks
    ```
-!IMAGE[speckit-impl.png](instructions310255/speckit-impl.png)
+![speckit-impl.png](images/speckit-impl.png)
 
 3. **Press Enter** - Copilot will start reading the tasks.md file
 
@@ -1436,7 +1481,7 @@ Now you'll trigger Copilot to implement all tasks:
    - Identify 14 tasks to complete
    - Show a summary of files to create/modify
 
-!IMAGE[speckit-read-files.png](instructions310255/speckit-read-files.png){500}
+![speckit-read-files.png](images/speckit-read-files.png)
 
 ---
 
@@ -1455,7 +1500,8 @@ As Copilot implements tasks, it will request permission to modify files:
 4. **Repeat** for each task
 
 
-> [!tip] **Approval Tips**
+> [!TIP]
+> **Approval Tips**
 > 
 > - **First approval** (Task 0.1): Updates `models/messages.py` - CRITICAL for routing
 > - **Most approvals**: Creating new files - safe to accept
@@ -1671,7 +1717,7 @@ Finally, verify the Entertainment Agent appears in the visual workflow:
      - Available tools (web_search, sequential-thinking)
      - Response format (SpecialistOutput)
 
-!IMAGE[speckit-enter-devui.png](instructions310255/speckit-enter-devui.png)
+![speckit-enter-devui.png](images/speckit-enter-devui.png)
 
 ---
 
@@ -1730,7 +1776,7 @@ Let's discuss what just happened:
 
 ---
 
-===
+---
 ## 17. Understanding What You Built
 
 Let's recap the key agent-framework concepts you've learned:
@@ -1808,19 +1854,19 @@ next_agent: Literal["venue", "budget", "catering", "logistics", "entertainment"]
 - **Extensible**: Spec-kit enables rapid feature development
 
 ---
-===
+---
 
 ## 18. Explore Microsoft Foundry
 
 Your agents are also running in Microsoft Foundry!
 
-1. **Open Microsoft Foundry**: Navigate to +++**https://ai.azure.com**+++
+1. **Open Microsoft Foundry**: Navigate to **https://ai.azure.com**
 
 2. **Sign in** with your Azure credentials (from Section 1)
 
 3. **Open your project**:
    - Click **All resources**
-   - Select **agents-lab-@lab.LabInstance.Id**
+   - Select **agents-lab-${LAB_INSTANCE_ID}**
 
 4. **View Deployed Agents**:
    - Left navigation → **Build** → **Agents**
@@ -1830,7 +1876,7 @@ Your agents are also running in Microsoft Foundry!
      - Configured tools
      - Model deployment
 
-   !IMAGE[ai-foundry-agents.png](instructions310255/ai-foundry-agents.png)
+   ![ai-foundry-agents.png](images/ai-foundry-agents.png)
 
 5. **Test in Playground**:
    - Click **Playground** tab
@@ -1856,7 +1902,7 @@ Your agents are also running in Microsoft Foundry!
      - **Performance**: Request duration and failures
 
 ---
-===
+---
 
 ## 19. Clean-Up
 
@@ -1879,7 +1925,7 @@ Delete all Azure resources created in this lab (Optional - lab will be purged au
    - Edge: Sign out from GitHub, Azure Portal, AI Foundry
 
 ---
-===
+---
 
 ## Congratulations!
 
