@@ -88,10 +88,6 @@ Your workflow in this lab uses message passing between agents through workflow e
 
 ---
 
-
-===
-
-
 ## 1. Lab Environment Setup
 
 Sign in to your lab environment using:
@@ -116,9 +112,6 @@ Your lab environment comes pre-configured with:
 
 ---
 
----
-
-
 ## 2. Clone and Set Up the Repository
 
 1. Launch **Visual Studio Code** from the Taskbar.
@@ -127,7 +120,8 @@ Your lab environment comes pre-configured with:
 
 3. Clone the Microsoft spec-to-agents repository and open the project:
 
-> [!hint] Use **Copy** instead of Type for longer snippets
+> [!TIP]
+> Use **Copy** instead of Type for longer snippets
 
 
    ```powershell
@@ -161,7 +155,7 @@ uv sync
 > While `uv sync` is running, open a **new terminal** (*Terminal → New Terminal* or click the **+** icon) and proceed to Section 3 to authenticate with Azure. This lets both processes run simultaneously!
 
 ---
----
+
 ## 3. Start Azure Resource Provisioning (Background Process)
 
 You'll use Azure Developer CLI (azd) to provision all necessary Azure resources. This process takes 5-10 minutes and runs in the background while you work on coding exercises.
@@ -242,8 +236,6 @@ You'll use Azure Developer CLI (azd) to provision all necessary Azure resources.
 
 ---
 
----
-
 ## 4. Understanding the Codebase Structure
 
 Before diving into coding, let's understand how the agent-framework code is organized.
@@ -293,8 +285,6 @@ src/spec_to_agents/
 > - **`/utils/`**: Helper functions for client creation and display
 > - **`main.py`**: Launch DevUI web interface (port 8080)
 > - **`console.py`**: Run workflow in terminal with Rich formatting
-
----
 
 ---
 
@@ -384,8 +374,6 @@ src/spec_to_agents/
 
 ---
 
----
-
 ## 6. Exercise 2: Implement a Web Search Tool
 
 **Concept**: Tools in agent-framework are Python functions decorated with `@ai_function`. The LLM discovers and invokes these tools automatically when needed.
@@ -437,7 +425,8 @@ src/spec_to_agents/
         return f"Error performing web search: {error_type} - {e!s}"
 ```
 
-> [!knowledge] **What You Just Learned**
+> [!NOTE]
+> **Knowledge: What You Just Learned**
 > 
 > **@ai_function Pattern**:
 > - `@ai_function`: Decorator that auto-generates OpenAI function calling schemas from Python type hints
@@ -518,7 +507,8 @@ src/spec_to_agents/
     return {"sequential-thinking": sequential_thinking_tool}
 ```
 
-> [!knowledge] **What You Just Learned**
+> [!NOTE]
+> **Knowledge: What You Just Learned**
 > 
 > **MCP (Model Context Protocol)**:
 > - Open standard for AI model ↔ tool communication (think "USB for AI tools")
@@ -582,8 +572,6 @@ src/spec_to_agents/
 > - No overhead if agents don't use the tool
 > - Automatic cleanup prevents resource leaks
 > - Shared tool instance across all agents (efficient)
-
----
 
 ---
 
@@ -743,8 +731,6 @@ src/spec_to_agents/
 
 ---
 
----
-
 ## 9. Exercise 5: Build the Workflow with Edges
 
 **Concept**: The **WorkflowBuilder** defines how agents communicate through **edges**. Each edge represents a potential message-passing path between executors.
@@ -893,7 +879,7 @@ src/spec_to_agents/
 > 
 > The workflow creates this execution graph:
 > 
-> !IMAGE[Event Planning Agent Design.png](instructions310255/Event Planning Agent Design.png){700}
+> ![Event Planning Agent Design.png](images/Event Planning Agent Design.png)
 > 
 > **Key Benefits**:
 > - **Dynamic routing**: Coordinator decides next agent based on `SpecialistOutput.next_agent`
@@ -912,8 +898,6 @@ src/spec_to_agents/
 > - Enables workflow versioning and tracking in production
 
 ---
----
-
 
 ## 10. Verify Environment Setup
 
@@ -954,8 +938,6 @@ Test-Path .env
 > ```powershell
 > .\scripts\generate-env.ps1
 > ```
-
----
 
 ---
 
@@ -1053,7 +1035,6 @@ uv run console
 > - **Service-managed threads**: Each agent remembered full conversation context
 
 ---
----
 
 ## 12. Visualize with DevUI
 
@@ -1098,9 +1079,6 @@ uv run app
 > - **Visual workflow graph**: See agent communication patterns
 > - **Detailed traces**: Debug with execution timings and message routing
 > - **Tool inspection**: View all tool calls and results in one place
-
-
----
 
 ---
 
@@ -1222,7 +1200,7 @@ See how Microsoft Foundry provides enterprise observability for your multi-agent
 > - **Threads**: Conversation history and state
 
 ---
----
+
 ## 15. BONUS: A2A (Agent-to-Agent) Integration
 
 In this bonus exercise, you'll explore **Agent-to-Agent (A2A) communication** by integrating your event planning workflow with external A2A-compatible agents. A2A enables direct agent communication across different frameworks and deployments.
@@ -1343,7 +1321,6 @@ uv run app
 > - **Framework Agnostic**: Use the best tool for each job - Azure AI Foundry for some agents, custom frameworks for others
 
 ---
-===
 
 ## 16. BONUS: Implement Entertainment Agent with Spec-Kit
 
@@ -1613,7 +1590,7 @@ After Copilot finishes (~10 minutes), verify all changes:
    - ✅ All tasks marked complete
    - ✅ No unresolved conflicts
 
-!IMAGE[spec-kit-impl-done.png](instructions310255/spec-kit-impl-done.png){500}
+![speckit-impl-done.png](images/speckit-impl-done.png)
 
 ---
 
@@ -1665,11 +1642,12 @@ Now test the complete workflow with the new Entertainment Agent:
    - Timing coordination with event schedule
    - Budget compliance ($500 allocated)
 
-!IMAGE[speckit-enter-1.png](instructions310255/speckit-enter-1.png)
+![speckit-enter-1.png](images/speckit-enter-1.png)
 
-!IMAGE[speckit-enter-2.png](instructions310255/speckit-enter-2.png)
+![speckit-enter-2.png](images/speckit-enter-2.png)
 
-> [!knowledge] **What Just Happened?**
+> [!NOTE]
+> **Knowledge: What Just Happened?**
 > 
 > The workflow now follows this path:
 > ```
@@ -1854,7 +1832,6 @@ next_agent: Literal["venue", "budget", "catering", "logistics", "entertainment"]
 - **Extensible**: Spec-kit enables rapid feature development
 
 ---
----
 
 ## 18. Explore Microsoft Foundry
 
@@ -1902,7 +1879,6 @@ Your agents are also running in Microsoft Foundry!
      - **Performance**: Request duration and failures
 
 ---
----
 
 ## 19. Clean-Up
 
@@ -1924,7 +1900,6 @@ Delete all Azure resources created in this lab (Optional - lab will be purged au
    - VS Code: Click profile icon → **Sign Out**
    - Edge: Sign out from GitHub, Azure Portal, AI Foundry
 
----
 ---
 
 ## Congratulations!
