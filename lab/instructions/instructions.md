@@ -1235,8 +1235,8 @@ A2A is an emerging standard protocol that enables:
    > The `AZURE_AI_FOUNDRY_PROJECT_ENDPOINT` value is in your spec-to-agents `.env` file. You can find it by opening the `.env` file in your original VS Code window (the spec-to-agents project).
 
 5. **Run the A2A agent**:
-   ```powershell
-uv run .
+   ```shell
+   uv run .
    ```
    
    The A2A agent will start and listen for requests from other agents. Keep this terminal running.
@@ -1245,7 +1245,7 @@ uv run .
 
 7. **Enable A2A integration** by uncommenting the `A2A_AGENT_HOST` variable:
    ```
-A2A_AGENT_HOST=http://localhost:10007
+   A2A_AGENT_HOST=http://localhost:10007
    ```
    
    Save the file.
@@ -1253,8 +1253,8 @@ A2A_AGENT_HOST=http://localhost:10007
 9. **Test the A2A integration via DevUI**:
    
    From your *spec-to-agents* repository, start DevUI (if not already running):
-   ```powershell
-uv run app
+   ```shell
+   uv run app
    ```
    
    DevUI will launch and open in your browser at `http://localhost:8080`
@@ -1331,61 +1331,7 @@ Constitution (principles) → Specify (what) → Plan (how) → Tasks (steps) �
 
 For this lab, we've **pre-populated** all specifications. You'll focus on the implementation workflow.
 
----
-
-### Step 1: Sign In to Skillable Events GitHub Enterprise
-
-Before using spec-kit with GitHub Copilot, you need to authenticate with the lab-provided GitHub Enterprise account.
-
-1. From your Desktop (or Taskbar), open the **Edge** shortcut, and navigate to: **https://github.com/skillable-events**
-
-2. Single sign-on to Skillable events, by clicking **Continue** on this page.
-
-   ![0-skillable-signin.png](images/0-skillable-signin.png)
-
-3. Sign in with your Azure Cloud Credentials:
-   - Username: ${USERNAME}
-   - Temporary Access Pass: ${ACCESS_TOKEN}
-
-> [!NOTE]
-> **Help:** If Temp pass didn't work, try   
-> 
-> **${PASSWORD}**
-
-4. Click on **Yes** to Stay Signed-in, when prompted
-
----
-
-### Step 2: Sign In to GitHub Copilot in VS Code
-
-Now connect VS Code to GitHub Copilot using your Skillable Events account:
-
-1. Return to **Visual Studio Code**
-
-2. In the bottom-right corner of VS Code, click the **GitHub Copilot** status icon, then click **Continue with GitHub**.
-
-   ![1-vsc-ghcp-signin.png](images/1-vsc-ghcp-signin.png)
-   
-   ![1b-vsc-continue-w-github.png](images/1b-vsc-continue-w-github.png)
-
-3. A browser window will open asking you to authorize Visual Studio Code. Click **Continue** to proceed.
-
-4. On the authorization page, click **Authorize Visual-Studio-Code** to grant access.
-
-   ![2-authorize-vsc.png](images/2-authorize-vsc.png)
-
-5. After authorization, the browser will redirect. Close the browser tab and return to VS Code.
-
-6. Verify that the GitHub Copilot icon in the bottom-right now shows you're signed in.
-
-> [!NOTE]
-> **GitHub Enterprise Account**
-> 
-> This lab uses a GitHub Enterprise account from the **skillable-events** organization, which provides access to GitHub Copilot features needed for spec-kit to work.
-
----
-
-### Step 3: Review Pre-Populated Specifications
+### Step 1: Review Pre-Populated Specifications
 
 The `.specify/` directory contains all the specifications for the Entertainment Agent feature:
 
@@ -1416,7 +1362,7 @@ The `.specify/` directory contains all the specifications for the Entertainment 
 
 ---
 
-### Step 4: Switch to Claude Sonnet 4.5
+### Step 2: Switch to Claude Sonnet 4.5
 
 For optimal spec-kit performance, use the Claude Sonnet 4.5 model:
 
@@ -1428,7 +1374,7 @@ For optimal spec-kit performance, use the Claude Sonnet 4.5 model:
 
 ---
 
-### Step 5: Start Spec-Kit Implementation
+### Step 3: Start Spec-Kit Implementation
 
 Now you'll trigger Copilot to implement all tasks:
 
@@ -1436,9 +1382,9 @@ Now you'll trigger Copilot to implement all tasks:
 
 2. **Type** the spec-kit command:
    ```
-/speckit.implement implement Tasks
+   /speckit.implement implement Tasks
    ```
-![speckit-impl.png](images/speckit-impl.png)
+   ![speckit-impl.png](images/speckit-impl.png)
 
 3. **Press Enter** - Copilot will start reading the tasks.md file
 
@@ -1447,12 +1393,11 @@ Now you'll trigger Copilot to implement all tasks:
    - Identify 14 tasks to complete
    - Show a summary of files to create/modify
 
-![speckit-read-files.png](images/speckit-read-files.png)
+   ![speckit-read-files.png](images/speckit-read-files.png)
 
 ---
 
-### Step 6: Approve Copilot Requests
-
+### Step 4: Approve Copilot Requests
 As Copilot implements tasks, it will request permission to modify files:
 
 1. **Copilot shows proposed changes**:
@@ -1486,7 +1431,7 @@ As Copilot implements tasks, it will request permission to modify files:
 
 ---
 
-### Step 7: Learn About Spec-Kit (While Copilot Works)
+### Step 5: Learn About Spec-Kit (While Copilot Works)
 
 While Copilot implements the tasks (~5-10 minutes), let's understand what's happening:
 
@@ -1739,9 +1684,6 @@ Let's discuss what just happened:
 - When would you use spec-kit vs manual coding?
 - How does constitution.md ensure code quality?
 
-
-
----
 
 ---
 ## 17. Understanding What You Built
