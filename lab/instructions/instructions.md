@@ -341,7 +341,7 @@ src/spec_to_agents/
 
 **Concept**: Tools in agent-framework are Python functions decorated with `@ai_function`. The LLM discovers and invokes these tools automatically when needed.
 
-![Agent Tools.png](https://github.com/fdtmsft/spec-to-agents/blob/main/assets/Agent%20Tools.png)
+![Agent Tools.png](https://raw.githubusercontent.com/fdtmsft/spec-to-agents/main/assets/Agent%20Tools.png)
 
 > [!IMPORTANT]
 > **Testing Still Comes Later**
@@ -842,7 +842,7 @@ src/spec_to_agents/
 > 
 > The workflow creates this execution graph:
 > 
-> ![Event Planning Agent Design.png](images/Event Planning Agent Design.png)
+> ![Event Planning Agent Design.png](https://raw.githubusercontent.com/fdtmsft/spec-to-agents/main/assets/Event%20Planning%20Agent%20Design.png)
 > 
 > **Key Benefits**:
 > - **Dynamic routing**: Coordinator decides next agent based on `SpecialistOutput.next_agent`
