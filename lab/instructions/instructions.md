@@ -8,36 +8,23 @@ Before starting this lab, you'll need to configure the following environment var
 - `${SUBSCRIPTION_ID}` - Your Azure subscription ID
 - `${RESOURCE_GROUP_LOCATION}` - Azure region for your resources (e.g., `eastus`, `westus2`)
 
-### Lab Identification
-- `${LAB_INSTANCE_ID}` - A unique identifier for your lab instance (can be any unique string)
-
 ### Azure Authentication
 - `${USERNAME}` - Your Azure portal username/email
 - `${PASSWORD}` - Your Azure portal password
-- `${ACCESS_TOKEN}` - Your temporary access pass or authentication token (if using)
-
-### Virtual Machine Credentials (if applicable)
-- `${VM_USERNAME}` - Virtual machine username
-- `${VM_PASSWORD}` - Virtual machine password
 
 ### How to Use These Variables
 
 **Option 1: Set as environment variables** (Linux/macOS)
 ```bash
 export SUBSCRIPTION_ID="your-subscription-id-here"
-export LAB_INSTANCE_ID="unique-lab-id"
-export RESOURCE_GROUP_LOCATION="eastus"
+export RESOURCE_GROUP_LOCATION="swedencentral"
 ```
 
 **Option 2: Set as environment variables** (Windows PowerShell)
 ```powershell
 $env:SUBSCRIPTION_ID="your-subscription-id-here"
-$env:LAB_INSTANCE_ID="unique-lab-id"
-$env:RESOURCE_GROUP_LOCATION="eastus"
+$env:RESOURCE_GROUP_LOCATION="swedencentral"
 ```
-
-**Option 3: Manual replacement**
-Throughout these instructions, replace each `${VARIABLE_NAME}` with your actual value when you see it in commands.
 
 ---
 
@@ -90,12 +77,6 @@ Your workflow in this lab uses message passing between agents through workflow e
 
 ## 1. Lab Environment Setup
 
-Sign in to your lab environment using:
-- Username: ${VM_USERNAME}
-- Password: ${VM_PASSWORD}
-
-Your lab environment comes pre-configured with:
-
 - **Visual Studio Code** - Primary development environment
 - **Python 3.12** - Latest stable version
 - **uv** - Fast Python package manager
@@ -104,11 +85,6 @@ Your lab environment comes pre-configured with:
 - **AI Toolkit extension for VSCode** - Simplifies Gen AI App Development
 - **Microsoft Foundry extension for VSCode** - Unified platform for Enterprise AI operations, Model builders, and App development
 - **Git** - Source control
-
-> [!TIP]
-> **Ignore Sign-In Notifications**
-> 
-> You may see blue "Sign in required" notifications or "Activate Windows" watermarks. Simply click "Not now" and continue - these won't affect your lab experience.
 
 ---
 
@@ -126,7 +102,7 @@ Your lab environment comes pre-configured with:
 
    ```powershell
 # Clone the repository
-git clone https://github.com/microsoft/spec-to-agents.git
+git clone https://github.com/fdtmsft/spec-to-agents.git
 cd spec-to-agents
 
 # Checkout Ignite lab branch
@@ -175,35 +151,23 @@ You'll use Azure Developer CLI (azd) to provision all necessary Azure resources.
    
    Select the existing signed-in account (from Step 1), or authenticate with:
    - Username: **${USERNAME}**  
-   - Temporary Access Pass: **${ACCESS_TOKEN}**
-
-   > [!NOTE]
-   > **Help:** If Temp pass didn't work, try   
-   > 
-   > **${PASSWORD}**
+   - Password: **${PASSWORD}**
    
    Authenticate in your browser, then close the tab and return to VS Code.
    
    Next, authenticate with **Azure CLI**:
    
    `az login --use-device-code`
-   
-   Following the instructions to copy your device code and Sign in:
-
-   ![device-code-az-login.png](images/device-code-az-login.png)
-   
+      
    Select existing account, or enter:
    - Username: **${USERNAME}**  
-   - Temporary Access Pass: **${ACCESS_TOKEN}**
-   
-   ![device-login-continue.png](images/device-login-continue.png)
-   
+   - Password: **${PASSWORD}**
+      
    Return to VS Code terminal and press **Enter** to select the default subscription.
-
 
 3. **Create azd Environment**:
    
-   `azd env new agents-lab-${LAB_INSTANCE_ID} --subscription ${SUBSCRIPTION_ID} --location ${RESOURCE_GROUP_LOCATION}`
+   `azd env new agents-lab --subscription ${SUBSCRIPTION_ID} --location ${RESOURCE_GROUP_LOCATION}`
 
 4. **Start Provisioning** (do not wait for completion):
    
@@ -377,7 +341,7 @@ src/spec_to_agents/
 
 **Concept**: Tools in agent-framework are Python functions decorated with `@ai_function`. The LLM discovers and invokes these tools automatically when needed.
 
-![Agent Tools.png](images/Agent Tools.png)
+![Agent Tools.png](https://github.com/fdtmsft/spec-to-agents/blob/main/assets/Agent%20Tools.png)
 
 > [!IMPORTANT]
 > **Testing Still Comes Later**
@@ -1111,12 +1075,8 @@ See how Microsoft Foundry provides enterprise observability for your multi-agent
 
 2. **Authenticate** with your credentials (or use existing signed-in account):
    - Username: **${USERNAME}**
-   - Temporary Access Pass: **${ACCESS_TOKEN}**
-   
-   > [!NOTE]
-   > **Help:** If Temp pass didn't work, try   
-   > 
-   > **${PASSWORD}**
+   - Password: **${PASSWORD}**
+
 
 3. **Select your project** (there will be only one):
 
@@ -1774,7 +1734,7 @@ Your agents are also running in Microsoft Foundry!
 
 3. **Open your project**:
    - Click **All resources**
-   - Select **agents-lab-${LAB_INSTANCE_ID}**
+   - Select **agents-lab**
 
 4. **View Deployed Agents**:
    - Left navigation → **Build** → **Agents**
