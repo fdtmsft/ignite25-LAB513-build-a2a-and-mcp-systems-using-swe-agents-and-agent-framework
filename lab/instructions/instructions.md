@@ -177,10 +177,10 @@ You'll use Azure Developer CLI (azd) to provision all necessary Azure resources.
    - Username: **${USERNAME}**  
    - Temporary Access Pass: **${ACCESS_TOKEN}**
 
-> [!NOTE]
-> **Help:** If Temp pass didn't work, try   
-> 
-> **${PASSWORD}**
+   > [!NOTE]
+   > **Help:** If Temp pass didn't work, try   
+   > 
+   > **${PASSWORD}**
    
    Authenticate in your browser, then close the tab and return to VS Code.
    
@@ -200,7 +200,6 @@ You'll use Azure Developer CLI (azd) to provision all necessary Azure resources.
    
    Return to VS Code terminal and press **Enter** to select the default subscription.
 
----
 
 3. **Create azd Environment**:
    
@@ -917,13 +916,9 @@ The `azd provision` command (from Section 3) automatically configured everything
    > 
    > Wait for `azd provision` to complete before proceeding (typically 5-10 minutes).
 
-2. **Verify `.env` file exists**
+   Verify `.env` file exists
 
-   ```powershell
-Test-Path .env
-   ```
 
-   Should output: `True`
 
 > [!NOTE]
 > **Knowledge: What Happened**
@@ -932,12 +927,6 @@ Test-Path .env
 > - Generated `.env` with Azure configuration
 > - Installed dependencies via `uv sync`
 > - Created `.venv` virtual environment
-
-> [!NOTE]
-> **If `.env` is missing**, run:
-> ```powershell
-> .\scripts\generate-env.ps1
-> ```
 
 ---
 
@@ -948,8 +937,9 @@ Now let's see your agents in action!
 ### Instructions
 
 1. **Start the console application**:
-   ```powershell
-uv run console
+   
+   ```shell
+   uv run console
    ```
 
 2. **Wait for the welcome screen**:
@@ -1041,8 +1031,8 @@ uv run console
 Run the workflow with a visual interface for debugging and exploration.
 
 1. **Start DevUI** (from repository root):
-   ```powershell
-uv run app
+   ```shell
+   uv run app
    ```
    Browser opens at `http://localhost:8080`
 
@@ -1108,7 +1098,6 @@ Now let's deploy your workflow to Azure!
    - Test the workflow with the same prompt you used locally: `Plan a corporate holiday party for 50 people, budget $5000`
    - Verify that the deployed version works identically to your local DevUI
 
----
 
 ---
 
@@ -1124,10 +1113,10 @@ See how Microsoft Foundry provides enterprise observability for your multi-agent
    - Username: **${USERNAME}**
    - Temporary Access Pass: **${ACCESS_TOKEN}**
    
-> [!NOTE]
-> **Help:** If Temp pass didn't work, try   
-> 
-> **${PASSWORD}**
+   > [!NOTE]
+   > **Help:** If Temp pass didn't work, try   
+   > 
+   > **${PASSWORD}**
 
 3. **Select your project** (there will be only one):
 
@@ -1141,7 +1130,7 @@ See how Microsoft Foundry provides enterprise observability for your multi-agent
 
 2. **Click "Connect"** to connect to Application Insights (only one option available)
 
-![connect-appinsights.png](images/connect-appinsights.png)
+   ![connect-appinsights.png](images/connect-appinsights.png)
 
 3. **View workflow runs** - each **workflow.run** entry shows a complete event planning execution:
 
@@ -1215,29 +1204,29 @@ A2A is an emerging standard protocol that enables:
 ### Exercise: Integrate an A2A Agent
 
 1. **Open a new VS Code window** for the A2A samples. From your current terminal, run:
-   ```powershell
-code -n
+   ```shell
+   code -n
    ```
    This opens a new VS Code instance in the same lab environment.
 
 2. **In the new VS Code window**, open a terminal and clone the A2A samples repository:
-   ```powershell
-git clone https://github.com/a2aproject/a2a-samples.git
-cd a2a-samples\samples\python\agents\azureaifoundry_sdk\azurefoundryagent
-code . --reuse-window
+   ```shell
+   git clone https://github.com/a2aproject/a2a-samples.git
+   cd a2a-samples\samples\python\agents\azureaifoundry_sdk\azurefoundryagent
+   code . --reuse-window
    ```
 
 3. Open a new Terminal and **Create a `.env` file** from the template:
-   ```powershell
-cp .env.template .env
+   ```shell
+   cp .env.template .env
    ```
 
 4. **Configure the A2A agent** with values from your spec-to-agents `.env` file:
    
    Open the `.env` file you just created and update:
    ```
-AZURE_AI_FOUNDRY_PROJECT_ENDPOINT=<Your Microsoft Foundry Project Endpoint From Spec-to-Agents>
-AZURE_AI_AGENT_MODEL_DEPLOYMENT_NAME=gpt-5-mini
+   AZURE_AI_FOUNDRY_PROJECT_ENDPOINT=<Your Microsoft Foundry Project Endpoint From Spec-to-Agents>
+   AZURE_AI_AGENT_MODEL_DEPLOYMENT_NAME=gpt-5-mini
    ```
    
    > [!TIP]
