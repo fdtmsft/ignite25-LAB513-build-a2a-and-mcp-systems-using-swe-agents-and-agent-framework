@@ -1005,8 +1005,8 @@ Run the workflow with a visual interface for debugging and exploration.
    - Enter your prompt: `Plan a corporate holiday party for 50 people, budget $5000`
    - Click **"Run Workflow"** and respond to any user inputs (elicitations)
 
-   ![devui-run-workflow.png](images/devui-run-workflow.png)
-   ![devui-1-user-elicitation.png](images/devui-1-user-elicitation.png)
+   <!-- ![devui-run-workflow.png](images/devui-run-workflow.png)
+   ![devui-1-user-elicitation.png](images/devui-1-user-elicitation.png) -->
 
 3. **Watch Execution**:
    - **Graph**: Nodes light up green as agents execute
@@ -1014,8 +1014,8 @@ Run the workflow with a visual interface for debugging and exploration.
    - **Traces Tab**: Execution duration and routing decisions
    - **Tools Tab**: Tool calls (like `web_search`) with arguments and results
 
-   ![devui-3-finish-run.png](images/devui-3-finish-run.png)
-   ![tool-calls-devui.png](images/tool-calls-devui.png)
+   <!-- ![devui-3-finish-run.png](images/devui-3-finish-run.png)
+   ![tool-calls-devui.png](images/tool-calls-devui.png) -->
 
 4. **Run the Agents** (Optional)
    - Select **"VenueSpecialist"** from the top dropdown
@@ -1025,7 +1025,7 @@ Run the workflow with a visual interface for debugging and exploration.
    - Click the **Tools** tab on the right hand side of the screen
    - Inspect the call to the **web_search** tool
 
-   ![devui-agent.png](images/devui-agent.png)
+   <!-- ![devui-agent.png](images/devui-agent.png) -->
 
 > [!NOTE]
 > **Knowledge: DevUI vs Console**
@@ -1078,9 +1078,9 @@ See how Microsoft Foundry provides enterprise observability for your multi-agent
    - Password: **${PASSWORD}**
 
 
-3. **Select your project** (there will be only one):
+3. **Select your project** (there will be only one)
 
-   ![aif-select-project.png](images/aif-select-project.png)
+   <!-- ![aif-select-project.png](images/aif-select-project.png) -->
 
 ---
 
@@ -1090,18 +1090,18 @@ See how Microsoft Foundry provides enterprise observability for your multi-agent
 
 2. **Click "Connect"** to connect to Application Insights (only one option available)
 
-   ![connect-appinsights.png](images/connect-appinsights.png)
+   <!-- ![connect-appinsights.png](images/connect-appinsights.png) -->
 
 3. **View workflow runs** - each **workflow.run** entry shows a complete event planning execution:
 
-   ![tracing-workflow-run.png](images/tracing-workflow-run.png)
+   <!-- ![tracing-workflow-run.png](images/tracing-workflow-run.png) -->
 
 4. **Click any workflow.run** to see the distributed trace:
    - Hierarchical view of all agents (venue, budget, catering, logistics)
    - Tool calls (web_search, sequentialthinking)
    - Expand nodes to see timing, token usage, and input/output data
 
-   ![tracing-explore.png](images/tracing-explore.png)
+   <!-- ![tracing-explore.png](images/tracing-explore.png) -->
 
 > [!NOTE]
 > **Knowledge: Distributed Tracing Benefits**
@@ -1122,7 +1122,7 @@ See how Microsoft Foundry provides enterprise observability for your multi-agent
    - Configured tools (web_search, sequentialthinking)
    - Model deployment (gpt-5-mini)
 
-   ![agents-event-coordinator.png](images/agents-event-coordinator.png)
+   <!-- ![agents-event-coordinator.png](images/agents-event-coordinator.png) -->
 
 3. **Explore Threads** to see conversation history from your console runs
 
@@ -1132,7 +1132,7 @@ See how Microsoft Foundry provides enterprise observability for your multi-agent
 
 1. **Click the Microsoft Foundry icon** in VS Code's left sidebar (bottom icon):
 
-   ![aif-vsc-extension.png](images/aif-vsc-extension.png)
+   <!-- ![aif-vsc-extension.png](images/aif-vsc-extension.png) -->
 
 2. **Sign in to Azure** (if prompted) using the same credentials
 
@@ -1223,7 +1223,7 @@ A2A is an emerging standard protocol that enables:
     - In DevUI, click the **Agents** dropdown at the top (currently shows "Workflows")
     - Select **"AI Foundry Calendar Agent"** from the list
     
-    ![devui-calendar-agent.png](images/devui-calendar-agent.png)
+    <!-- ![devui-calendar-agent.png](images/devui-calendar-agent.png) -->
 
 11. **Interact with the A2A agent**:
     - In the chat input at the bottom, type: `Check my availability for Friday at 8 am`
@@ -1237,7 +1237,7 @@ A2A is an emerging standard protocol that enables:
     - You'll see console logs showing incoming requests from your spec-to-agents DevUI interaction
     - The logs show the A2A protocol in action - your agent-framework workflow communicating with the Azure AI Foundry Agent that is A2A compatible
 
-13. **View the agent in Microsoft Foundry**:
+13. **View the agent in Microsoft Foundry (Classic)**:
     - Navigate to +++**https://ai.azure.com**+++
     - Sign in and select your project
     - Go to **Build** → **Agents** in the left navigation
@@ -1247,7 +1247,7 @@ A2A is an emerging standard protocol that enables:
       - Conversation threads from your DevUI interactions
       - Tool calls and responses
     
-    ![Foundry-agents-calendar.png](images/Foundry-agents-calendar.png)
+    <!-- ![Foundry-agents-calendar.png](images/Foundry-agents-calendar.png) -->
 
 > [!NOTE]
 > **Knowledge: What Just Happened?**
@@ -1344,7 +1344,7 @@ Now you'll trigger Copilot to implement all tasks:
    ```
    /speckit.implement implement Tasks
    ```
-   ![speckit-impl.png](images/speckit-impl.png)
+   <!-- ![speckit-impl.png](images/speckit-impl.png) -->
 
 3. **Press Enter** - Copilot will start reading the tasks.md file
 
@@ -1353,7 +1353,7 @@ Now you'll trigger Copilot to implement all tasks:
    - Identify 14 tasks to complete
    - Show a summary of files to create/modify
 
-   ![speckit-read-files.png](images/speckit-read-files.png)
+   <!-- ![speckit-read-files.png](images/speckit-read-files.png) -->
 
 ---
 
@@ -1484,7 +1484,7 @@ After Copilot finishes (~10 minutes), verify all changes:
    - ✅ All tasks marked complete
    - ✅ No unresolved conflicts
 
-![speckit-impl-done.png](images/speckit-impl-done.png)
+<!-- ![speckit-impl-done.png](images/speckit-impl-done.png) -->
 
 ---
 
@@ -1536,9 +1536,9 @@ Now test the complete workflow with the new Entertainment Agent:
    - Timing coordination with event schedule
    - Budget compliance ($500 allocated)
 
-![speckit-enter-1.png](images/speckit-enter-1.png)
+<!-- ![speckit-enter-1.png](images/speckit-enter-1.png) -->
 
-![speckit-enter-2.png](images/speckit-enter-2.png)
+<!-- ![speckit-enter-2.png](images/speckit-enter-2.png) -->
 
 > [!NOTE]
 > **Knowledge: What Just Happened?**
@@ -1589,7 +1589,7 @@ Finally, verify the Entertainment Agent appears in the visual workflow:
      - Available tools (web_search, sequential-thinking)
      - Response format (SpecialistOutput)
 
-![speckit-enter-devui.png](images/speckit-enter-devui.png)
+<!-- ![speckit-enter-devui.png](images/speckit-enter-devui.png) -->
 
 ---
 
@@ -1744,7 +1744,7 @@ Your agents are also running in Microsoft Foundry!
      - Configured tools
      - Model deployment
 
-   ![ai-foundry-agents.png](images/ai-foundry-agents.png)
+   <!-- ![ai-foundry-agents.png](images/ai-foundry-agents.png) -->
 
 5. **Test in Playground**:
    - Click **Playground** tab
@@ -1849,4 +1849,3 @@ Continue your agent-framework journey:
 - **Microsoft Foundry**: [ai.azure.com](https://ai.azure.com)
 - **Spec-Kit**: [github.com/spec-kit](https://github.com/spec-kit)
 
-**Happy coding at Microsoft Ignite 2025!**
