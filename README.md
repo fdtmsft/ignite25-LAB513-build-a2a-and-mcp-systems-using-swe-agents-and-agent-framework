@@ -1,13 +1,4 @@
-<p align="center">
-<img src="img/Banner-ignite-25.png" alt="decorative banner" width="1200"/>
-</p>
-
-# [Microsoft Ignite 2025](https://ignite.microsoft.com)
-
-## 🔥LAB513: Build A2A and MCP Systems using SWE Agents and agent-framework
-
-[![Microsoft Foundry Discord](https://dcbadge.limes.pink/api/server/nTYy5BXMWG)](https://aka.ms/MicrosoftFoundry-Ignite25)
-[![Microsoft Foundry Developer Forum](https://img.shields.io/badge/GitHub-Microsoft_Foundry_Developer_Forum-blue?style=for-the-badge&logo=github&color=adff2f&logoColor=fff)](https://aka.ms/MicrosoftFoundryForum-Ignite25)
+## 🔥LAB: Build A2A and MCP Systems using SWE Agents and agent-framework
 
 ### Session Description
 
@@ -15,7 +6,7 @@ Learn to leverage Microsoft Agent Framework, the new unified platform from Seman
 
 ### 📁 Repository
 
-For detailed lab instructions and hands-on exercises, navigate to the [spec-to-agents](https://github.com/microsoft/spec-to-agents) repository. The Skillable related instructions can be found in [lab/instructions](./lab/instructions) directory.
+Instructions can be found in [lab/instructions](./lab/instructions) directory.
 
 ### 🧠 Learning Outcomes
 
@@ -34,19 +25,6 @@ The Microsoft Learn MCP Server is a remote MCP Server that enables clients like 
 For more information, setup instructions for other dev clients, and to post comments and questions, visit our Learn MCP Server GitHub repo at [https://github.com/MicrosoftDocs/MCP](https://github.com/MicrosoftDocs/MCP). Find other MCP Servers to connect your agent to at [https://mcp.azure.com](https://mcp.azure.com).
 
 *Note: When you use the Learn MCP Server, you agree with [Microsoft Learn](https://learn.microsoft.com/en-us/legal/termsofuse) and [Microsoft API Terms](https://learn.microsoft.com/en-us/legal/microsoft-apis/terms-of-use) of Use.*
-
-### 📚 Resources and Next Steps
-
-| Resources          | Links                             | Description        |
-|:-------------------|:----------------------------------|:-------------------|
-| Ignite 2025 Next Steps | [https://aka.ms/Ignite25-Next-Steps](https://aka.ms/Ignite25-Next-Steps?ocid=ignite25_nextsteps_cnl) | Links to all repos for Ignite 2025 Sessions |
-| Microsoft Foundry Community Discord | [![Microsoft Foundry Discord](https://dcbadge.limes.pink/api/server/nTYy5BXMWG)](https://aka.ms/MicrosoftFoundry-Ignite25)| Connect with the Microsoft Foundry Community! |
-| Learn at Ignite | [https://aka.ms/LearnAtIgnite](https://aka.ms/LearnAtIgnite?ocid=ignite25_nextsteps_github_cnl) | Continue learning on Microsoft Learn |
-
-## Content Owners
-
-Core AI Engineering Team
-
 
 ## Contributing
 
